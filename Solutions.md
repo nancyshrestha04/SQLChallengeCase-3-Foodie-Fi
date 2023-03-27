@@ -65,5 +65,30 @@ WHERE		p.plan_name = 'churn' and s.start_date IS NOT NULL;
 ![Screen Shot 2023-03-27 at 6 45 34 pm](https://user-images.githubusercontent.com/123035903/227875246-83ea305c-4bfa-45d5-b33c-a14d912eff5e.png)
 ***
 
+### 5. How many customers have churned straight after their initial free trial - what percentage is this rounded to the nearest whole number?
+````sql
+
+WITH ranking AS (
+SELECT	s.customer_id, s.plan_id, p.plan_name,
+		ROW_NUMBER() OVER (
+    	PARTITION BY s.customer_id 
+    	ORDER BY s.plan_id) AS plan_rank 
+FROM	subscriptions s
+		JOIN plans p
+  		ON s.plan_id = p.plan_id
+)  
+SELECT	COUNT(*) AS churn_count,
+  		ROUND(100 * COUNT(*) / (
+    	SELECT COUNT(DISTINCT customer_id) 
+    	FROM subscriptions),0) AS churn_percentage
+FROM	ranking
+WHERE	plan_id = 4 
+  		AND plan_rank = 2;
+````
+![Screen Shot 2023-03-27 at 8 05 12 pm](https://user-images.githubusercontent.com/123035903/227895263-6e1cd590-55b7-4b62-955a-afa64774ca80.png)
+***
+
+### 6. What is the number and percentage of customer plans after their initial free trial?
+
 
 
