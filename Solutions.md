@@ -88,7 +88,7 @@ WHERE	plan_id = 4
 ![Screen Shot 2023-03-27 at 8 05 12 pm](https://user-images.githubusercontent.com/123035903/227895263-6e1cd590-55b7-4b62-955a-afa64774ca80.png)
 ***
 
-### 6. What is the number and percentage of customer plans after their initial free trial?
+
 
 
 
